@@ -1,7 +1,6 @@
-package com.example.losdelaheroica
+package com.example.losdelaheroica.login.ui
 
 import android.app.Activity
-import android.util.Patterns
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,10 +12,9 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -26,10 +24,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.losdelaheroica.R
 import com.example.losdelaheroica.ui.theme.*
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(loginViewModel: LoginViewModel) {
     Column(
         Modifier
             .fillMaxSize()
@@ -38,7 +37,8 @@ fun LoginScreen() {
     ) {
         Header(Modifier.align(Alignment.End))
         Body(
-            Modifier
+            modifier = Modifier,
+            loginViewModel = loginViewModel
         )
         Footer(Modifier.align(Alignment.CenterHorizontally))
     }
@@ -62,23 +62,21 @@ fun Footer(modifier: Modifier) {
 }
 
 @Composable
-fun Body(modifier: Modifier) {
-    var email by rememberSaveable { mutableStateOf("") }
-    var pass by rememberSaveable { mutableStateOf("") }
-    var isLoginEnabled by rememberSaveable { mutableStateOf(false) }
+fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
+    val email: String by loginViewModel.email.observeAsState(initial = "")
+    val pass: String by loginViewModel.password.observeAsState(initial = "")
+    val isLoginEnabled by loginViewModel.isLoginEnabled.observeAsState(initial = false)
     Column(modifier = modifier) {
         MusicalGroupImage(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.size(35.dp))
         TitleAndInstructions()
         Spacer(modifier = Modifier.size(35.dp))
         EmailTextField(email) {
-            email = it
-            isLoginEnabled = enabledLogin(email, pass)
+            loginViewModel.onLoginChange(email = it, password = pass)
         }
         Spacer(modifier = Modifier.size(20.dp))
         PasswordTextField(pass) {
-            pass = it
-            isLoginEnabled = enabledLogin(email, pass)
+            loginViewModel.onLoginChange(email = email, password = it)
         }
         Spacer(modifier = Modifier.size(16.dp))
         LoginButton(isLoginEnabled, Modifier.align(Alignment.CenterHorizontally))
@@ -143,7 +141,7 @@ fun PasswordTextField(pass: String, onTextChanged: (String) -> Unit) {
         value = pass,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = "Correo electrónico") },
+        placeholder = { Text(text = "Contraseña") },
         maxLines = 1,
         shape = RoundedCornerShape(17.dp),
         singleLine = true,
@@ -212,6 +210,3 @@ fun Header(modifier: Modifier) {
         contentDescription = "Close app",
         modifier = modifier.clickable { activity.finish() })
 }
-
-fun enabledLogin(email: String, pass: String) =
-    Patterns.EMAIL_ADDRESS.matcher(email).matches() && pass.length > 6

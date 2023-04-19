@@ -62,6 +62,9 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
+    //liveData
+    implementation 'androidx.compose.runtime:runtime-livedata:1.4.1'
+
     //icon Extended
     implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
 }
