@@ -1,6 +1,7 @@
 package com.example.losdelaheroica.login.ui
 
 import android.app.Activity
+import android.graphics.Paint.Align
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -29,18 +30,23 @@ import com.example.losdelaheroica.ui.theme.*
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel) {
+    val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = false)
     Column(
-        Modifier
+        modifier = if (isLoading) Modifier.fillMaxHeight() else Modifier
             .fillMaxSize()
             .padding(vertical = 12.dp, horizontal = 30.dp),
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = if (isLoading) Arrangement.Center else Arrangement.SpaceBetween
     ) {
-        Header(Modifier.align(Alignment.End))
-        Body(
-            modifier = Modifier,
-            loginViewModel = loginViewModel
-        )
-        Footer(Modifier.align(Alignment.CenterHorizontally))
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+        } else {
+            Header(Modifier.align(Alignment.End))
+            Body(
+                modifier = Modifier,
+                loginViewModel = loginViewModel
+            )
+            Footer(Modifier.align(Alignment.CenterHorizontally))
+        }
     }
 }
 
@@ -79,7 +85,7 @@ fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
             loginViewModel.onLoginChange(email = email, password = it)
         }
         Spacer(modifier = Modifier.size(16.dp))
-        LoginButton(isLoginEnabled, Modifier.align(Alignment.CenterHorizontally))
+        LoginButton(isLoginEnabled, Modifier.align(Alignment.CenterHorizontally), loginViewModel)
         Spacer(modifier = Modifier.size(15.dp))
         ForgotPassText(Modifier.align(Alignment.CenterHorizontally))
     }
@@ -96,10 +102,12 @@ fun ForgotPassText(modifier: Modifier) {
 }
 
 @Composable
-fun LoginButton(loginEnabled: Boolean, modifier: Modifier) {
+fun LoginButton(loginEnabled: Boolean, modifier: Modifier, loginViewModel: LoginViewModel) {
     Button(
         modifier = modifier,
-        onClick = { },
+        onClick = {
+            loginViewModel.loginClick()
+        },
         shape = RoundedCornerShape(35.dp),
         enabled = loginEnabled,
         colors = ButtonDefaults.buttonColors(
