@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.losdelaheroica.R
+import com.example.losdelaheroica.core.composable.CommonButton
 import com.example.losdelaheroica.ui.theme.*
 
 @Composable
@@ -103,26 +104,12 @@ fun ForgotPassText(modifier: Modifier) {
 
 @Composable
 fun LoginButton(loginEnabled: Boolean, modifier: Modifier, loginViewModel: LoginViewModel) {
-    Button(
+    CommonButton(
         modifier = modifier,
-        onClick = {
-            loginViewModel.loginClick()
-        },
-        shape = RoundedCornerShape(35.dp),
-        enabled = loginEnabled,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = fluorescentBlue,
-            contentColor = darkGunmetal,
-            disabledBackgroundColor = fluorescentBlueDisable,
-            disabledContentColor = textGray
-        )
-    ) {
-        Text(
-            text = "Ingresar",
-            fontSize = 16.sp,
-            modifier = Modifier.padding(vertical = 10.dp, horizontal = 60.dp)
-        )
-    }
+        onClick = { loginViewModel.loginClick() },
+        loginEnabled,
+        "Ingresar"
+    )
 }
 
 @Composable

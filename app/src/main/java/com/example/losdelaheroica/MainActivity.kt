@@ -10,6 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.losdelaheroica.addSong.ui.SongScreen
+import com.example.losdelaheroica.addSong.ui.SongViewModel
 import com.example.losdelaheroica.login.ui.LoginScreen
 import com.example.losdelaheroica.login.ui.LoginViewModel
 import com.example.losdelaheroica.ui.theme.LosDeLaHeroicaTheme
@@ -19,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
+    private val songViewModel: SongViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -28,6 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = backGroundColor
                 ) {
+                    //SongScreen(songViewModel = songViewModel)
                     LoginScreen(loginViewModel)
                 }
             }
