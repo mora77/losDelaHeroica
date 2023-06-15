@@ -31,8 +31,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = backGroundColor
                 ) {
-                    //SongScreen(songViewModel = songViewModel)
-                    LoginScreen(loginViewModel)
+                    SongScreen(songViewModel = songViewModel)
+                    //LoginScreen(loginViewModel)
                 }
             }
         }
