@@ -1,8 +1,7 @@
-package com.example.losdelaheroica.login.data.network
+package com.example.examentecnico.login.data.network
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
 import javax.inject.Inject
 
 //clase que consume al cliente

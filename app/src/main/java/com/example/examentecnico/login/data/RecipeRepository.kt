@@ -1,6 +1,6 @@
-package com.example.losdelaheroica.login.data
+package com.example.examentecnico.login.data
 
-import com.example.losdelaheroica.login.data.network.LoginService
+import com.example.examentecnico.login.data.network.LoginService
 import javax.inject.Inject
 
 class LoginRepository @Inject constructor(private val api: LoginService) {

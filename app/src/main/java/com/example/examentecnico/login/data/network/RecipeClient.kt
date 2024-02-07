@@ -1,6 +1,6 @@
-package com.example.losdelaheroica.login.data.network
+package com.example.examentecnico.login.data.network
 
-import com.example.losdelaheroica.login.data.network.response.LoginResponse
+import com.example.examentecnico.login.data.network.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.GET
 

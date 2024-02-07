@@ -6,12 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.losdelaheroica.addSong.ui.SongScreen
 import com.example.losdelaheroica.addSong.ui.SongViewModel
+import com.example.losdelaheroica.core.model.Routes.*
 import com.example.losdelaheroica.login.ui.LoginScreen
 import com.example.losdelaheroica.login.ui.LoginViewModel
 import com.example.losdelaheroica.ui.theme.LosDeLaHeroicaTheme
@@ -31,23 +32,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = backGroundColor
                 ) {
-                    SongScreen(songViewModel = songViewModel)
-                    //LoginScreen(loginViewModel)
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = LoginScreen.idRoute) {
+                        composable(LoginScreen.idRoute) {
+                            LoginScreen(
+                                loginViewModel = loginViewModel,
+                                navController = navController
+                            )
+                        }
+
+                        composable(SongScreen.idRoute) {
+                            SongScreen(
+                                songViewModel = songViewModel,
+                                navController = navController
+                            )
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    LosDeLaHeroicaTheme {
-        Greeting("Android")
     }
 }

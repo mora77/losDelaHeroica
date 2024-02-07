@@ -1,7 +1,6 @@
-package com.example.losdelaheroica.login.ui
+package com.example.examentecnico.login.ui
 
 import android.app.Activity
-import android.graphics.Paint.Align
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -25,13 +24,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.losdelaheroica.R
-import com.example.losdelaheroica.core.composable.CommonButton
-import com.example.losdelaheroica.ui.theme.*
+import androidx.navigation.NavHostController
+import com.example.examentecnico.core.composable.CommonButton
+import com.example.examentecnico.ui.theme.*
+import com.example.examentecnico.R
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel) {
-    val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = false)
+fun LoginScreen(loginViewModel: LoginViewModel, navController: NavHostController) {
+    val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = true)
     Column(
         modifier = if (isLoading) Modifier.fillMaxHeight() else Modifier
             .fillMaxSize()

@@ -1,6 +1,6 @@
-package com.example.losdelaheroica.login.domain
+package com.example.examentecnico.login.domain
 
-import com.example.losdelaheroica.login.data.LoginRepository
+import com.example.examentecnico.login.data.LoginRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(private val repository: LoginRepository) {
